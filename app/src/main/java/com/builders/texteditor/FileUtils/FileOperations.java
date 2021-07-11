@@ -3,8 +3,7 @@ package com.builders.texteditor.FileUtils;
 import android.os.Build;
 import android.util.Log;
 
-import com.example.filemanager.Activity.FileActivity;
-import com.example.filemanager.AppController;
+import com.builders.texteditor.AppController;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -130,18 +129,4 @@ public class FileOperations {
         fileOrFolder.delete();
     }
 
-    public static void copyOrMove(String origin, String dest) throws FileAlreadyExistsException {
-        File originFile = new File(origin);
-        File destFile = new File(dest);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            try {
-                Files.copy(originFile.toPath(), destFile.toPath());
-                if (AppController.whichAction == FileActivity.ACTION.MOVE) {
-                    deleteFileOrFolder(originFile);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }

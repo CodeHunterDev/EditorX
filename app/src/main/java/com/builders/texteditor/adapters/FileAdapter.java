@@ -50,10 +50,10 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHodler> {
         holder.fileFolderIV.setBackgroundResource(FileIcon.whichIcon(singleFile));
         holder.fileFolderSizeTV.setText(setFileSize(singleFile, holder.sizeDateBlockLL));
         holder.fileFolderCreationDateTV.setText("Last Modified : " + FileOperations.gesStringLastModifiedDate(singleFile.lastModified()));
-        holder.mainContainerLL.setBackgroundColor(Color.parseColor(selectedPositions[position] ? "#ededed" : "#FFFFFF"));
+        holder.mainContainerLL.setBackgroundColor(Color.parseColor(selectedPositions[position] ? "#180e17" : "#333333"));
 
         holder.itemView.setOnClickListener(v -> {
-            if(isAnyFileSelected() && !AppController.isCopyOrCut){
+            if(isAnyFileSelected()){
                 selectItem(position);
             }else{
                 onItemListener.OnItemClick(position);
@@ -65,13 +65,13 @@ public class FileAdapter extends RecyclerView.Adapter<FileAdapter.ViewHodler> {
         });
     }
 
-    private void selectItem(int position){
+    private void selectItem(int position) {
         selectedPositions[position] = !selectedPositions[position];
         onItemListener.OnItemLongClick(selectedPositions);
         notifyDataSetChanged();
     }
 
-    private boolean isAnyFileSelected(){
+    private boolean isAnyFileSelected() {
         boolean isFileSelected = false;
         for (int i = 0; i < selectedPositions.length; i++) {
             if (selectedPositions[i]) {

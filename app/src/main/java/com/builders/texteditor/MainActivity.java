@@ -1,21 +1,28 @@
 package com.builders.texteditor;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.builders.texteditor.activities.FileViewerActivity;
+import com.builders.texteditor.activities.WebViewrActivity;
 import com.builders.texteditor.customes.LineEditText;
 import com.builders.texteditor.utils.FileUtils;
 
 public class MainActivity extends AppCompatActivity {
 
     int STORAGE_CODE = 1000;
+    int FILE_SAVING_CODE = 2000;
     LineEditText fileEditText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,14 +76,45 @@ public class MainActivity extends AppCompatActivity {
                 saveFile();
             }
             break;
+            case R.id.play_code: {
+                if (AppController.isFileNotSaved()) {
+                    AppController.showToast("Save File First");
+                    saveFile();
+                } else {
+                    saveFile();
+                    runtTheCode();
+                }
+            }
+            break;
         }
         return true;
     }
 
-    private void saveFile() {
-//        FileUtils.setFileValue("/storage/emulated/0/Download/Testing.html", fileEditText.getText().toString());
-//        AppController.showToast("File Saved");
-
-
+    private void runtTheCode() {
+        startActivity(new Intent(this, WebViewrActivity.class));
     }
+
+    private void saveFile() {
+        if (AppController.currentFilePath.isEmpty()) {
+            startActivityForResult(new Intent(this, FileViewerActivity.class), FILE_SAVING_CODE);
+        } else {
+            FileUtils.appendFileValue(AppController.currentFilePath, fileEditText.getText().toString());
+            getSupportActionBar().setTitle(FileUtils.getCurrentFileName());
+            Toast.makeText(this, "File Saved", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable @org.jetbrains.annotations.Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == FILE_SAVING_CODE) {
+            if (resultCode == RESULT_OK) {
+                AppController.currentFilePath = data.getStringExtra(FileViewerActivity.SELECTED_FILE_PATH);
+                saveFile();
+            } else {
+                AppController.showToast("Your data are not saved");
+            }
+        }
+    }
+
 }

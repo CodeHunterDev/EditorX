@@ -3,12 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/purple_200">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/toolbar_cd"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height">
+        android:layout_height="@dimen/toolbar_height"
+        app:cardBackgroundColor="@color/purple_200">
 
         <RelativeLayout
             android:id="@+id/toolbar_rl"
@@ -22,7 +24,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dimen_12dp"
                 android:src="@drawable/ic_arrow_back"
-                app:tint="@android:color/black" />
+                app:tint="@android:color/white" />
 
             <TextView
                 android:id="@+id/toolbar_title_tv"
@@ -33,6 +35,7 @@
                 android:ellipsize="end"
                 android:maxLength="20"
                 android:maxLines="1"
+                android:textColor="@android:color/white"
                 android:textSize="18dp"
                 tools:text="@string/home" />
 
@@ -40,10 +43,21 @@
                 android:id="@+id/create_folder_iv"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_12dp"
+                android:layout_toLeftOf="@id/select_iv"
+                android:src="@drawable/ic_create_new_folder"
+                app:tint="@android:color/white" />
+
+            <ImageView
+                android:id="@+id/select_iv"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dimen_12dp"
-                android:src="@drawable/ic_create_new_folder" />
+                android:src="@drawable/ic_check"
+                app:tint="@android:color/white" />
 
         </RelativeLayout>
 
@@ -55,6 +69,7 @@
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar_cd"
         android:layout_alignParentBottom="true"
+        android:background="@color/purple_200"
         android:visibility="gone" />
 
     <LinearLayout

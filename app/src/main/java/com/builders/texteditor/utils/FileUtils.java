@@ -1,6 +1,7 @@
 package com.builders.texteditor.utils;
 
 import android.content.Context;
+import android.os.Build;
 
 import com.builders.texteditor.AppController;
 
@@ -10,6 +11,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class FileUtils {
 
@@ -62,5 +65,13 @@ public class FileUtils {
 
     public static void deleteFile(String fileName) {
         context.deleteFile(fileName);
+    }
+
+    public static String getCurrentFileName() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return Paths.get(AppController.currentFilePath).getFileName().toString();
+        } else {
+            return "";
+        }
     }
 }

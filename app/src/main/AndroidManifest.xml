@@ -14,7 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.TextEditor">
-        <activity android:name=".FileViewerActivity"></activity>
+
+        <activity
+            android:name=".activities.WebViewrActivity"
+            android:parentActivityName=".MainActivity" />
+
+        <activity android:name=".activities.FileViewerActivity" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

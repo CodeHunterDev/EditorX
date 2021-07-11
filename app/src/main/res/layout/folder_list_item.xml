@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_container_ll"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/file_folder_item_height"
+    android:background="@color/purple_200"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="6dp">
+
+    <Space
+        android:layout_width="@dimen/dimen_12dp"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/file_folder_iv"
+        android:layout_width="@dimen/file_folder_item_icon_size"
+        android:layout_height="@dimen/file_folder_item_icon_size"
+        android:background="@drawable/ic_folder" />
+
+    <Space
+        android:layout_width="@dimen/dimen_12dp"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/file_folder_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:maxLines="1"
+            android:textSize="16dp"
+            tools:text="dummy text"
+            android:textColor="@android:color/white"/>
+
+        <LinearLayout
+            android:id="@+id/size_date_block_ll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <TextView
+                android:id="@+id/file_creation_date_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#CCFFFFFF"
+                android:textSize="12dp"
+                tools:text="5 , june , 2021" />
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/file_size_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#CCFFFFFF"
+                android:textSize="12dp"
+                tools:text="11.5 MB" />
+
+            <Space
+                android:layout_width="12dp"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

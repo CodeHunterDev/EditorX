@@ -10,4 +10,7 @@
     <color name="gray_white">#B3FFFFFF</color>
     <color name="dove_grey">#6f6f6f</color>
     <color name="yellow_orange">#ffb63c</color>
+    <color name="gallery">#EDEDED</color>
+    <color name="gondola">#180e17</color>
+    <color name="green">#45f248</color>
 </resources>
