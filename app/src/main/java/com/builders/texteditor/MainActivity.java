@@ -74,7 +74,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void saveFile() {
-        FileUtils.setFileValue("/storage/emulated/0/Download/Testing.html", fileEditText.getText().toString());
-        AppController.showToast("File Saved");
+//        FileUtils.setFileValue("/storage/emulated/0/Download/Testing.html", fileEditText.getText().toString());
+//        AppController.showToast("File Saved");
+
+
     }
 }
