@@ -1,9 +1,20 @@
 package com.builders.editorx;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.TextWatcher;
+import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,10 +24,16 @@ import com.builders.editorx.activities.FileSelectionActivity;
 import com.builders.editorx.activities.FileViewerActivity;
 import com.builders.editorx.activities.WebViewrActivity;
 import com.builders.editorx.callbacks.BottomSheetCallBack;
+import com.builders.editorx.constants.CodeConstants;
 import com.builders.editorx.customes.FileBottomSheetDialog;
 import com.builders.editorx.customes.LineEditText;
 import com.builders.editorx.utils.FileUtils;
 import com.builders.editorx.utils.PrefUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity implements BottomSheetCallBack {
 
@@ -40,8 +57,35 @@ public class MainActivity extends AppCompatActivity implements BottomSheetCallBa
                 updateToolbarName();
                 PrefUtils.setCurrentFileOpen(true);
                 PrefUtils.saveCurrentFileUrl(AppController.currentFilePath);
+                changeTheColor();
             }
         }
+    }
+
+    private void changeTheColor() {
+        fileEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                Spannable inputStr = (Spannable) s;
+                for (String tag : CodeConstants.tagList) {
+                    final Pattern p = Pattern.compile(tag);
+                    final Matcher matcher = p.matcher(inputStr);
+                    while (matcher.find())
+                        inputStr.setSpan(new ForegroundColorSpan(Color.GREEN), matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        fileEditText.setText(fileEditText.getText().toString() + "");
     }
 
     private void initViews() {
@@ -165,9 +209,26 @@ public class MainActivity extends AppCompatActivity implements BottomSheetCallBa
 
     @Override
     public void removeFile(String url) {
-        if(AppController.removeFile(url)) {
+        if (AppController.removeFile(url)) {
             fileBottomSheetDialog.dismiss();
             checkForCurrentFile();
         }
+    }
+
+    public void setHighLightedText(EditText editText, String textToHighlight) {
+        ForegroundColorSpan colorSpan = new ForegroundColorSpan(getResources().getColor(android.R.color.holo_red_dark));
+        String tvt = editText.getText().toString();
+        int ofe = 0;
+        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(editText.getText());
+
+        for (int ofs = 0; ofs < tvt.length() && ofe != -1; ofs = ofe + 1) {
+            ofe = tvt.indexOf(textToHighlight, ofs);
+            if (ofe == -1)
+                break;
+            else {
+                spannableStringBuilder.setSpan(colorSpan, ofe, ofe + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            }
+        }
+
     }
 }

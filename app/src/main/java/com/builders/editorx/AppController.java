@@ -8,12 +8,14 @@ import android.widget.Toast;
 
 import com.builders.editorx.FileUtils.FileOperations;
 import com.builders.editorx.activities.FileSelectionActivity;
+import com.builders.editorx.constants.CodeConstants;
 import com.builders.editorx.database.FileDatabase;
 import com.builders.editorx.modal.FileModel;
 import com.builders.editorx.utils.FileUtils;
 import com.builders.editorx.utils.PrefUtils;
 
 import java.io.File;
+import java.lang.invoke.ConstantCallSite;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +36,7 @@ public class AppController extends Application {
         context = this;
         PrefUtils.init();
         initDb();
+        CodeConstants.init();
     }
 
     private void initDb() {
