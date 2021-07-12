@@ -62,6 +62,11 @@ public class FileBottomSheetDialog extends BottomSheetDialogFragment {
                 bottomSheetCallBack.openOtherFile(fileUrl);
                 dismiss();
             }
+
+            @Override
+            public void onFileRemove(String fileUrl) {
+                bottomSheetCallBack.removeFile(fileUrl);
+            }
         });
         recyclerView.setAdapter(bottomSheetDialogAdapter);
     }

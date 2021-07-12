@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetCallBa
 
     int FILE_SAVING_CODE = 2000;
     LineEditText fileEditText;
+    FileBottomSheetDialog fileBottomSheetDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetCallBa
     private void closeCurrentFile() {
         PrefUtils.saveLastFileUrl(AppController.currentFilePath);
         PrefUtils.setCurrentFileOpen(false);
+        AppController.removeFile(AppController.currentFilePath);
         AppController.currentFilePath = "";
         Intent intent = new Intent(this, FileSelectionActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -151,14 +153,21 @@ public class MainActivity extends AppCompatActivity implements BottomSheetCallBa
     }
 
     void showDialog() {
-        FileBottomSheetDialog fileBottomSheetDialog = FileBottomSheetDialog.newInstance(this);
+        fileBottomSheetDialog = FileBottomSheetDialog.newInstance(this);
         fileBottomSheetDialog.show(getSupportFragmentManager(), "");
     }
-
 
     @Override
     public void openOtherFile(String url) {
         AppController.currentFilePath = url;
         checkForCurrentFile();
+    }
+
+    @Override
+    public void removeFile(String url) {
+        if(AppController.removeFile(url)) {
+            fileBottomSheetDialog.dismiss();
+            checkForCurrentFile();
+        }
     }
 }

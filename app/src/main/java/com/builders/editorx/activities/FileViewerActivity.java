@@ -139,6 +139,12 @@ public class FileViewerActivity extends AppCompatActivity implements OnClick, Vi
     }
 
     private void openFile(File file) {
+
+        if (!AppController.isValidFileFormat(file.getAbsolutePath())) {
+            AppController.showToast("only web files can be open");
+            return;
+        }
+
         AppController.currentAction = AppController.ACTION.NONE;
         AppController.currentFilePath = file.getAbsolutePath();
         AppController.addFile(AppController.currentFilePath);

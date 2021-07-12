@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,6 +47,9 @@ public class BottomSheetDialogAdapter extends RecyclerView.Adapter<BottomSheetDi
         holder.itemView.setOnClickListener(v -> {
             bottomSheetAdapterCallBack.onFileSelected(singleFile.getFileUrl());
         });
+        holder.closeIcon.setOnClickListener(v -> {
+            bottomSheetAdapterCallBack.onFileRemove(singleFile.getFileUrl());
+        });
     }
 
     @Override
@@ -56,11 +60,13 @@ public class BottomSheetDialogAdapter extends RecyclerView.Adapter<BottomSheetDi
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView fileName;
         TextView filePath;
+        ImageView closeIcon;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             fileName = itemView.findViewById(R.id.file_name_tv);
             filePath = itemView.findViewById(R.id.file_path_tv);
+            closeIcon = itemView.findViewById(R.id.close_icon);
         }
     }
 }

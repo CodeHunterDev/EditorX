@@ -32,6 +32,7 @@ public class SplashActivity extends AppCompatActivity {
         Intent intent;
         if (currentFileOpen) {
             AppController.currentFilePath = PrefUtils.getCurrentFileUrl();
+            AppController.addFile(AppController.currentFilePath);
             intent = new Intent(this, MainActivity.class);
         } else {
             intent = new Intent(this, FileSelectionActivity.class);

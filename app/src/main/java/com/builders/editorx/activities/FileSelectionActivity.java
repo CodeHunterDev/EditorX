@@ -69,6 +69,7 @@ public class FileSelectionActivity extends AppCompatActivity implements View.OnC
         boolean value = PrefUtils.isLastFileAvailable();
         if (value) {
             AppController.currentFilePath = PrefUtils.getLastFileUrl();
+            AppController.addFile(AppController.currentFilePath);
             openNewDocument();
         } else {
             AppController.showToast("No last file available");
@@ -82,6 +83,7 @@ public class FileSelectionActivity extends AppCompatActivity implements View.OnC
     }
 
     private void openNewDocument() {
+        AppController.currentFilePath = "";
         Intent intent = new Intent(this , MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);

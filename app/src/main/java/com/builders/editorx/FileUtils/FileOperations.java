@@ -129,4 +129,11 @@ public class FileOperations {
         fileOrFolder.delete();
     }
 
+    public static String getFileExtension(String file) {
+        int lastIndexOf = file.lastIndexOf(".");
+        if (lastIndexOf == -1) {
+            return ""; // empty extension
+        }
+        return file.substring(lastIndexOf);
+    }
 }
