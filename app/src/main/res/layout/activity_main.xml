@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
 
-    <com.builders.texteditor.customes.LineEditText
+    <com.builders.editorx.customes.LineEditText
         android:id="@+id/file_edit_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
