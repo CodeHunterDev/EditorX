@@ -8,60 +8,48 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.builders.editorx.activities.FileSelectionActivity;
 import com.builders.editorx.activities.FileViewerActivity;
 import com.builders.editorx.activities.WebViewrActivity;
 import com.builders.editorx.customes.LineEditText;
 import com.builders.editorx.utils.FileUtils;
+import com.builders.editorx.utils.PrefUtils;
 
 public class MainActivity extends AppCompatActivity {
 
-    int STORAGE_CODE = 1000;
     int FILE_SAVING_CODE = 2000;
     LineEditText fileEditText;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        checkPermission();
         initViews();
+        checkForCurrentFile();
+    }
+
+    private void checkForCurrentFile() {
+        if (!AppController.currentFilePath.isEmpty()) {
+            String data = FileUtils.getFileValue(AppController.currentFilePath);
+
+            if (data != null) {
+                fileEditText.setText(data);
+                updateToolbarName();
+                PrefUtils.setCurrentFileOpen(true);
+                PrefUtils.saveCurrentFileUrl(AppController.currentFilePath);
+            }
+        }
     }
 
     private void initViews() {
         fileEditText = findViewById(R.id.file_edit_text);
     }
 
-    private void checkPermission() {
-        if (!isPermissionAvailable()) {
-            String permission[] = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
-            requestPermissions(permission, STORAGE_CODE);
-        }
-    }
-
-    private boolean isPermissionAvailable() {
-        boolean isAvailable = true;
-        if (!(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED))
-            isAvailable = false;
-        if (!(checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED))
-            isAvailable = false;
-        return isAvailable;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull @org.jetbrains.annotations.NotNull String[] permissions, @NonNull @org.jetbrains.annotations.NotNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == STORAGE_CODE) {
-            if (!isPermissionAvailable()) {
-                AppController.showToast(getResources().getString(R.string.access_denied));
-                finish();
-            }
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -77,17 +65,48 @@ public class MainActivity extends AppCompatActivity {
             }
             break;
             case R.id.play_code: {
-                if (AppController.isFileNotSaved()) {
-                    AppController.showToast("Save File First");
-                    saveFile();
-                } else {
-                    saveFile();
-                    runtTheCode();
-                }
+                handleCodePlay();
             }
             break;
+            case R.id.file_new: {
+
+            }
+            break;
+            case R.id.file_close: {
+                closeCurrentFile();
+            }
+            break;
+            case R.id.file_open: {
+                openFile();
+            }
+            break;
+
         }
         return true;
+    }
+
+    private void closeCurrentFile() {
+        PrefUtils.saveLastFileUrl(AppController.currentFilePath);
+        PrefUtils.setCurrentFileOpen(false);
+        AppController.currentFilePath = "";
+        Intent intent = new Intent(this , FileSelectionActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    private void openFile() {
+        AppController.currentAction = AppController.ACTION.OPEN_FILE;
+        startActivity(new Intent(this, FileViewerActivity.class));
+    }
+
+    private void handleCodePlay() {
+        if (AppController.isFileNotSaved()) {
+            AppController.showToast("Save File First");
+            saveFile();
+        } else {
+            saveFile();
+            runtTheCode();
+        }
     }
 
     private void runtTheCode() {
@@ -99,9 +118,14 @@ public class MainActivity extends AppCompatActivity {
             startActivityForResult(new Intent(this, FileViewerActivity.class), FILE_SAVING_CODE);
         } else {
             FileUtils.appendFileValue(AppController.currentFilePath, fileEditText.getText().toString());
-            getSupportActionBar().setTitle(FileUtils.getCurrentFileName());
-            Toast.makeText(this, "File Saved", Toast.LENGTH_SHORT).show();
+            PrefUtils.saveCurrentFileUrl(AppController.currentFilePath);
+            updateToolbarName();
+            AppController.showToast("File Saved");
         }
+    }
+
+    private void updateToolbarName() {
+        getSupportActionBar().setTitle(FileUtils.getCurrentFileName());
     }
 
     @Override
@@ -116,5 +140,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 }

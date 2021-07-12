@@ -7,6 +7,11 @@ import android.widget.Toast;
 import com.builders.editorx.utils.PrefUtils;
 
 public class AppController extends Application {
+
+    public static enum ACTION {OPEN_FILE, CREATE_FILE, NONE}
+
+    public static ACTION currentAction = ACTION.NONE;
+
     public static Context context;
     public static String currentFilePath = "";
 

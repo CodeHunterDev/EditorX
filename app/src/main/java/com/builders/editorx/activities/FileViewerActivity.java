@@ -14,13 +14,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.builders.editorx.AppController;
 import com.builders.editorx.BuildConfig;
 import com.builders.editorx.FileUtils.FileConstants;
 import com.builders.editorx.FileUtils.FileOperations;
+import com.builders.editorx.MainActivity;
 import com.builders.editorx.callbacks.OnClick;
 import com.builders.editorx.R;
 import com.builders.editorx.adapters.FileAdapter;
 import com.builders.editorx.customes.CreateFolderDialog;
+import com.builders.editorx.utils.PrefUtils;
 
 import java.io.File;
 import java.util.List;
@@ -56,6 +59,14 @@ public class FileViewerActivity extends AppCompatActivity implements OnClick, Vi
         getSupportActionBar().hide();
         init();
         initializeFileManager(FileConstants.HOME_DIRECTORY);
+        checkForCurrentAction();
+    }
+
+    private void checkForCurrentAction() {
+        if (AppController.currentAction == AppController.ACTION.OPEN_FILE) {
+            createNewFolder.setVisibility(View.GONE);
+            selectPathIv.setVisibility(View.GONE);
+        }
     }
 
 
@@ -129,31 +140,20 @@ public class FileViewerActivity extends AppCompatActivity implements OnClick, Vi
     }
 
     private void openFile(File file) {
-        Uri uri = FileProvider.getUriForFile(this, BuildConfig.APPLICATION_ID, file);
-        String mime = getContentResolver().getType(uri);
+        AppController.currentAction = AppController.ACTION.NONE;
+        AppController.currentFilePath = file.getAbsolutePath();
 
-        // Open file with user selected app
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.setDataAndType(uri, mime);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        PrefUtils.saveCurrentFileUrl(AppController.currentFilePath);
+        PrefUtils.setCurrentFileOpen(true);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
     @Override
     public void OnItemLongClick(boolean[] selectedPositions) {
         this.selectedPositions = selectedPositions;
-        checkForSelection();
-    }
-
-    private void checkForSelection() {
-        boolean isSelected = false;
-        for (int i = 0; i < selectedPositions.length; i++) {
-            if (selectedPositions[i]) {
-                isSelected = true;
-                break;
-            }
-        }
     }
 
     @Override
@@ -207,7 +207,8 @@ public class FileViewerActivity extends AppCompatActivity implements OnClick, Vi
         if (isFile) {
             Intent intent = new Intent();
             intent.putExtra(SELECTED_FILE_PATH, currentPath + File.separator + fileName);
-            setResult(Activity.RESULT_OK , intent);
+            setResult(Activity.RESULT_OK, intent);
+            AppController.currentAction = AppController.ACTION.NONE;
             finish();
         } else {
             FileOperations.createNewFolder(currentPath, fileName);

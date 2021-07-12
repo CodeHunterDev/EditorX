@@ -16,4 +16,19 @@
         android:title="save"
         app:showAsAction="always" />
 
+    <item
+        android:id="@+id/file_new"
+        android:title="New document"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/file_close"
+        android:title="Close file"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/file_open"
+        android:title="Open file"
+        app:showAsAction="never" />
+
 </menu>

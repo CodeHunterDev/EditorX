@@ -6,11 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.builders.editorx.AppController;
 import com.builders.editorx.MainActivity;
 import com.builders.editorx.R;
 import com.builders.editorx.utils.PrefUtils;
-
-import java.io.File;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -29,8 +28,14 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void handleNextScreen() {
-        boolean isOpenLastFile = PrefUtils.isLastFileOpen();
-        Intent intent = new Intent(this , isOpenLastFile ? MainActivity.class : FileSelectionActivity.class);
+        boolean currentFileOpen = PrefUtils.isCurrentFileOpen();
+        Intent intent;
+        if (currentFileOpen) {
+            AppController.currentFilePath = PrefUtils.getCurrentFileUrl();
+            intent = new Intent(this, MainActivity.class);
+        } else {
+            intent = new Intent(this, FileSelectionActivity.class);
+        }
         startActivity(intent);
         finish();
     }

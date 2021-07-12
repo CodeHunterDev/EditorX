@@ -34,17 +34,50 @@ public class PrefUtils {
         return sharedPreferences.getString(key, "");
     }
 
+    private static void saveBoolean(String key, boolean value) {
+        try {
+            if (!key.isEmpty()) {
+                editor.putBoolean(key, value);
+                editor.apply();
+                editor.commit();
+            } else {
+                throw new Exception("Key Or Value can not be empty");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static boolean getBoolean(String key) {
+        return sharedPreferences.getBoolean(key, false);
+    }
+
     public static void saveCurrentFileUrl(String value) {
-        saveString(PrefConstants.PREF_FILE_NAME, value);
+        saveString(PrefConstants.CURRENT_FILE_URL, value);
     }
 
     public static String getCurrentFileUrl() {
-        return getString(PrefConstants.PREF_FILE_NAME);
+        return getString(PrefConstants.CURRENT_FILE_URL);
     }
 
-    public static boolean isLastFileOpen() {
-        String url = getCurrentFileUrl();
+    public static void saveLastFileUrl(String value) {
+        saveString(PrefConstants.LAST_FILE_URL, value);
+    }
+
+    public static String getLastFileUrl() {
+        return getString(PrefConstants.LAST_FILE_URL);
+    }
+
+    public static boolean isCurrentFileOpen() {
+        return getBoolean(PrefConstants.CURRENT_FILE_AVAILABLE);
+    }
+
+    public static void setCurrentFileOpen(boolean value) {
+        saveBoolean(PrefConstants.CURRENT_FILE_AVAILABLE, value);
+    }
+
+    public static boolean isLastFileAvailable() {
+        String url = getLastFileUrl();
         return url.isEmpty() ? false : true;
     }
-
 }
