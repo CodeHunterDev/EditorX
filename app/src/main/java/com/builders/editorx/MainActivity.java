@@ -1,26 +1,24 @@
 package com.builders.editorx;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Toast;
-
 import com.builders.editorx.activities.FileSelectionActivity;
 import com.builders.editorx.activities.FileViewerActivity;
 import com.builders.editorx.activities.WebViewrActivity;
+import com.builders.editorx.callbacks.BottomSheetCallBack;
+import com.builders.editorx.customes.FileBottomSheetDialog;
 import com.builders.editorx.customes.LineEditText;
 import com.builders.editorx.utils.FileUtils;
 import com.builders.editorx.utils.PrefUtils;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements BottomSheetCallBack {
 
     int FILE_SAVING_CODE = 2000;
     LineEditText fileEditText;
@@ -36,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private void checkForCurrentFile() {
         if (!AppController.currentFilePath.isEmpty()) {
             String data = FileUtils.getFileValue(AppController.currentFilePath);
-
             if (data != null) {
                 fileEditText.setText(data);
                 updateToolbarName();
@@ -69,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             }
             break;
             case R.id.file_new: {
-
+                openNewDocument();
             }
             break;
             case R.id.file_close: {
@@ -80,16 +77,28 @@ public class MainActivity extends AppCompatActivity {
                 openFile();
             }
             break;
-
+            case R.id.file_list: {
+                showDialog();
+            }
+            break;
         }
         return true;
+    }
+
+    private void openNewDocument() {
+        AppController.currentFilePath = "";
+        PrefUtils.setCurrentFileOpen(false);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     private void closeCurrentFile() {
         PrefUtils.saveLastFileUrl(AppController.currentFilePath);
         PrefUtils.setCurrentFileOpen(false);
         AppController.currentFilePath = "";
-        Intent intent = new Intent(this , FileSelectionActivity.class);
+        Intent intent = new Intent(this, FileSelectionActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
@@ -139,5 +148,17 @@ public class MainActivity extends AppCompatActivity {
                 AppController.showToast("Your data are not saved");
             }
         }
+    }
+
+    void showDialog() {
+        FileBottomSheetDialog fileBottomSheetDialog = FileBottomSheetDialog.newInstance(this);
+        fileBottomSheetDialog.show(getSupportFragmentManager(), "");
+    }
+
+
+    @Override
+    public void openOtherFile(String url) {
+        AppController.currentFilePath = url;
+        checkForCurrentFile();
     }
 }

@@ -17,6 +17,13 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/file_list"
+        android:icon="@drawable/ic_list"
+        android:iconTint="@color/gray_white"
+        android:title="list"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/file_new"
         android:title="New document"
         app:showAsAction="never" />

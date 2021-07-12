@@ -74,4 +74,12 @@ public class FileUtils {
             return "";
         }
     }
+
+    public static String getFileName(String url) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            return Paths.get(url).getFileName().toString();
+        } else {
+            return "";
+        }
+    }
 }
