@@ -12,5 +12,6 @@ public class PrefConstants {
     public static final String LAST_FILE_URL = "LAST_FILE_URL";
     public static final String CURRENT_FILE_URL = "CURRENT_FILE_URL";
     public static final String CURRENT_FILE_AVAILABLE = "CURRENT_FILE_AVAILABLE";
+    public static final String LAST_FILE_AVAILABLE = "LAST_FILE_AVAILABLE";
 
 }

@@ -141,6 +141,7 @@ public class CodeConstants {
         tagList.add(new TagModel("<var>", normalColor));
         tagList.add(new TagModel("<video>", normalColor));
         tagList.add(new TagModel("<wbr>", normalColor));
+        tagList.add(new TagModel("<hr>", normalColor));
 
         tagList.add(new TagModel("<a", normalColor));
         tagList.add(new TagModel("<abbr", normalColor));
@@ -254,6 +255,7 @@ public class CodeConstants {
         tagList.add(new TagModel("<var", normalColor));
         tagList.add(new TagModel("<video", normalColor));
         tagList.add(new TagModel("<wbr", normalColor));
+        tagList.add(new TagModel("<hr", normalColor));
 
     }
 
@@ -370,6 +372,7 @@ public class CodeConstants {
         tagList.add(new TagModel("</video>", normalColor));
         tagList.add(new TagModel("</wbr>", normalColor));
         tagList.add(new TagModel("</a>", normalColor));
+        tagList.add(new TagModel("/<hr>", normalColor));
 
     }
 

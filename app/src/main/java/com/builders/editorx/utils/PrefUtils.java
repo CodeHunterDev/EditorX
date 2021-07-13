@@ -18,7 +18,7 @@ public class PrefUtils {
 
     private static void saveString(String key, String value) {
         try {
-            if (!key.isEmpty() && !value.isEmpty()) {
+            if (!key.isEmpty()) {
                 editor.putString(key, value);
                 editor.apply();
                 editor.commit();
@@ -74,6 +74,14 @@ public class PrefUtils {
 
     public static void setCurrentFileOpen(boolean value) {
         saveBoolean(PrefConstants.CURRENT_FILE_AVAILABLE, value);
+    }
+
+    public static void setLastFileAvailable(boolean value) {
+        saveBoolean(PrefConstants.LAST_FILE_AVAILABLE, value);
+    }
+
+    public static boolean getLastFileAvailable() {
+        return getBoolean(PrefConstants.LAST_FILE_AVAILABLE);
     }
 
     public static boolean isLastFileAvailable() {
