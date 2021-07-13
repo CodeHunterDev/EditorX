@@ -3,4 +3,11 @@
     <string name="access_denied">You can not use this app without storage permission</string>
     <string name="home">Home</string>
     <string name="file_cant_empty">File name can not be empty</string>
+    <string name="less_than">&lt;</string>
+    <string name="less_than_close">&lt;/</string>
+    <string name="greater_than">&gt;</string>
+    <string name="equal">=</string>
+    <string name="br">&lt;br&gt;</string>
+    <string name="hr">&lt;hr&gt;</string>
+    <string name="input">&lt;input&gt;</string>
 </resources>

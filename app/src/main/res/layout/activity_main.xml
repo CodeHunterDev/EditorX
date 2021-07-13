@@ -1,23 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/purple_200"
-    tools:context=".MainActivity">
+    android:background="@color/purple_200">
 
+    <LinearLayout
+        android:id="@+id/action_bar_ll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="@drawable/sidebar_bg">
 
-    <com.builders.editorx.customes.LineEditText
-        android:singleLine="false"
-        android:id="@+id/file_edit_text"
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tab_short_cut"
+            style="@style/CommonTagTextStyle"
+            android:text="TAB" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/a_short_cut"
+            style="@style/CommonTagTextStyle"
+            android:text="A" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/h1_short_cut"
+            style="@style/CommonTagTextStyle"
+            android:text="H1" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/br_short_cut"
+            style="@style/CommonTagTextStyle"
+            android:text="BR" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/hr_short_cut"
+            style="@style/CommonTagTextStyle"
+            android:text="HR" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/div_short_cut"
+            style="@style/CommonTagTextStyle"
+            android:text="DIV" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/b_short_cut"
+            style="@style/CommonTagTextStyle"
+            android:text="B" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/i_short_cut"
+            style="@style/CommonTagTextStyle"
+            android:text="I" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/u_short_cut"
+            style="@style/CommonTagTextStyle"
+            android:text="U" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/less_than_short_cut"
+            style="@style/CommonTagTextStyle"
+            android:text="@string/less_than" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/less_than_close_short_cut"
+            style="@style/CommonTagTextStyle"
+            android:text="@string/less_than_close" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/greater_than_short_cut"
+            style="@style/CommonTagTextStyle"
+            android:text="@string/greater_than" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        android:gravity="start"
-        android:hint="Start typing from here."
-        android:padding="12dp"
-        android:textColor="@android:color/white"
-        android:textColorHint="#B3FFFFFF" />
+        android:layout_below="@id/action_bar_ll">
 
-</HorizontalScrollView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.builders.editorx.customes.LineEditText
+                android:id="@+id/file_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:hint="Start typing from here."
+                android:padding="12dp"
+                android:singleLine="false"
+                android:textColor="@android:color/white"
+                android:textColorHint="#B3FFFFFF" />
+
+        </RelativeLayout>
+
+    </HorizontalScrollView>
+
+</RelativeLayout>

@@ -13,6 +13,7 @@ import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -36,11 +37,25 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainActivity extends AppCompatActivity implements BottomSheetCallBack {
+public class MainActivity extends AppCompatActivity implements BottomSheetCallBack, View.OnClickListener {
 
     int FILE_SAVING_CODE = 2000;
     LineEditText fileEditText;
     FileBottomSheetDialog fileBottomSheetDialog;
+
+    TextView tabShortCutTV;
+    TextView aShortCutTV;
+    TextView h1ShortCutTV;
+    TextView brShortCutTV;
+    TextView hrShortCutTV;
+    TextView divShortCutTV;
+    TextView bShortCutTV;
+    TextView iShortCutTV;
+    TextView uShortCutTV;
+    TextView lessThanShortCutTV;
+    TextView lessThanCloseShortCutTv;
+    TextView greaterThanShortCutTV;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,11 +101,37 @@ public class MainActivity extends AppCompatActivity implements BottomSheetCallBa
 
             }
         });
+
         fileEditText.setText(fileEditText.getText().toString() + "");
     }
 
     private void initViews() {
         fileEditText = findViewById(R.id.file_edit_text);
+        tabShortCutTV = findViewById(R.id.tab_short_cut);
+        aShortCutTV = findViewById(R.id.a_short_cut);
+        h1ShortCutTV = findViewById(R.id.h1_short_cut);
+        brShortCutTV = findViewById(R.id.br_short_cut);
+        hrShortCutTV = findViewById(R.id.hr_short_cut);
+        divShortCutTV = findViewById(R.id.div_short_cut);
+        bShortCutTV = findViewById(R.id.b_short_cut);
+        iShortCutTV = findViewById(R.id.i_short_cut);
+        uShortCutTV = findViewById(R.id.u_short_cut);
+        lessThanCloseShortCutTv = findViewById(R.id.less_than_close_short_cut);
+        lessThanShortCutTV = findViewById(R.id.less_than_short_cut);
+        greaterThanShortCutTV = findViewById(R.id.greater_than_short_cut);
+
+        tabShortCutTV.setOnClickListener(this);
+        aShortCutTV.setOnClickListener(this);
+        h1ShortCutTV.setOnClickListener(this);
+        brShortCutTV.setOnClickListener(this);
+        hrShortCutTV.setOnClickListener(this);
+        divShortCutTV.setOnClickListener(this);
+        bShortCutTV.setOnClickListener(this);
+        iShortCutTV.setOnClickListener(this);
+        uShortCutTV.setOnClickListener(this);
+        lessThanCloseShortCutTv.setOnClickListener(this);
+        lessThanShortCutTV.setOnClickListener(this);
+        greaterThanShortCutTV.setOnClickListener(this);
     }
 
 
@@ -216,20 +257,68 @@ public class MainActivity extends AppCompatActivity implements BottomSheetCallBa
         }
     }
 
-    public void setHighLightedText(EditText editText, String textToHighlight) {
-        ForegroundColorSpan colorSpan = new ForegroundColorSpan(getResources().getColor(android.R.color.holo_red_dark));
-        String tvt = editText.getText().toString();
-        int ofe = 0;
-        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(editText.getText());
-
-        for (int ofs = 0; ofs < tvt.length() && ofe != -1; ofs = ofe + 1) {
-            ofe = tvt.indexOf(textToHighlight, ofs);
-            if (ofe == -1)
-                break;
-            else {
-                spannableStringBuilder.setSpan(colorSpan, ofe, ofe + textToHighlight.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.tab_short_cut: {
+                insertElement("    ");
             }
+            break;
+            case R.id.a_short_cut: {
+                insertElement("<a href=\"\"></a>");
+            }
+            break;
+            case R.id.h1_short_cut: {
+                insertElement("<h1></h1>");
+            }
+            break;
+            case R.id.br_short_cut: {
+                insertElement("<br>");
+            }
+            break;
+            case R.id.hr_short_cut: {
+                insertElement("<hr>");
+            }
+            break;
+            case R.id.div_short_cut: {
+                insertElement("<div></div>");
+            }
+            break;
+            case R.id.b_short_cut: {
+                insertElement("<b></b>");
+            }
+            break;
+            case R.id.i_short_cut: {
+                insertElement("<i></i>");
+            }
+            break;
+            case R.id.u_short_cut: {
+                insertElement("<u></u>");
+            }
+            break;
+            case R.id.less_than_short_cut: {
+                insertElement("<");
+            }
+            break;
+            case R.id.less_than_close_short_cut: {
+                insertElement("</");
+            }
+            break;
+            case R.id.greater_than_short_cut: {
+                insertElement(">");
+            }
+            break;
         }
+    }
 
+
+    private void insertElement(String value) {
+
+        int startPosition = fileEditText.getSelectionStart();
+        String availableValue = fileEditText.getText().toString();
+
+        String formatted = availableValue.substring(0, startPosition) + value + availableValue.substring(startPosition);
+        fileEditText.setText(formatted);
+        fileEditText.setSelection(startPosition + value.length());
     }
 }
