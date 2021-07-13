@@ -27,6 +27,7 @@ import com.builders.editorx.callbacks.BottomSheetCallBack;
 import com.builders.editorx.constants.CodeConstants;
 import com.builders.editorx.customes.FileBottomSheetDialog;
 import com.builders.editorx.customes.LineEditText;
+import com.builders.editorx.modal.TagModel;
 import com.builders.editorx.utils.FileUtils;
 import com.builders.editorx.utils.PrefUtils;
 
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements BottomSheetCallBa
         setContentView(R.layout.activity_main);
         initViews();
         checkForCurrentFile();
+        changeTheColor();
     }
 
     private void checkForCurrentFile() {
@@ -57,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements BottomSheetCallBa
                 updateToolbarName();
                 PrefUtils.setCurrentFileOpen(true);
                 PrefUtils.saveCurrentFileUrl(AppController.currentFilePath);
-                changeTheColor();
             }
         }
     }
@@ -72,11 +73,11 @@ public class MainActivity extends AppCompatActivity implements BottomSheetCallBa
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Spannable inputStr = (Spannable) s;
-                for (String tag : CodeConstants.tagList) {
-                    final Pattern p = Pattern.compile(tag);
+                for (TagModel tag : CodeConstants.tagList) {
+                    final Pattern p = Pattern.compile(tag.getTag());
                     final Matcher matcher = p.matcher(inputStr);
                     while (matcher.find())
-                        inputStr.setSpan(new ForegroundColorSpan(Color.GREEN), matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        inputStr.setSpan(new ForegroundColorSpan(tag.getColor()), matcher.start(), matcher.end(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
             }
 
