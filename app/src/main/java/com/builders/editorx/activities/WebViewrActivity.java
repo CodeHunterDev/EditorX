@@ -1,11 +1,9 @@
 package com.builders.editorx.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
 import com.builders.editorx.AppController;
 import com.builders.editorx.R;
 
@@ -30,6 +28,8 @@ public class WebViewrActivity extends AppCompatActivity {
         webView = findViewById(R.id.web_view);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
+        webView.getSettings().setAllowFileAccess(true);
+        webView.getSettings().setAllowContentAccess(true);
         webView.loadUrl(AppController.getWebUrl());
     }
 }

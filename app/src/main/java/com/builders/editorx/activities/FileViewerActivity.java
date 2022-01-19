@@ -65,6 +65,9 @@ public class FileViewerActivity extends AppCompatActivity implements OnClick, Vi
         if (AppController.currentAction == AppController.ACTION.OPEN_FILE) {
             createNewFolder.setVisibility(View.GONE);
             selectPathIv.setVisibility(View.GONE);
+        } else {
+            createNewFolder.setVisibility(View.VISIBLE);
+            selectPathIv.setVisibility(View.VISIBLE);
         }
     }
 
